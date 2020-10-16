@@ -11,7 +11,7 @@
 ### Profil
 *Tout les champs disponibles dans cette page doivent pouvoir être modifiés(IonInput ou IonAlert par exemple) simplement par l’utilisateur.* 
 
-Les champssont les suivant:
+Les champs sont les suivant:
 - Nom
 - Photo de profil (IonImg)
 - Apport (€)
