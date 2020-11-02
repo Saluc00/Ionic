@@ -1,0 +1,14 @@
+{
+  "appId": "fr.ycode.investment",
+  "appName": "investment",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/yann/Documents/Software/android-studio/bin/studio.sh"
+}
