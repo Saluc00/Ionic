@@ -55,7 +55,7 @@ const AskAppart: React.FC = () => {
         <IonButton onClick={() => setShowModal(false)}>Fermer</IonButton>
         </IonList>
       </IonModal>
-      <IonButton onClick={() => setShowModal(true)}>Ajouter Appartement</IonButton>
+      <IonButton expand="full" onClick={() => setShowModal(true)}>Ajouter Appartement</IonButton>
     </IonContent>
   );
 };
