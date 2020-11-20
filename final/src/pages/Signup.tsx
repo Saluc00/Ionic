@@ -4,7 +4,8 @@ import firebase from "../firebase";
 import "firebase/auth";
 import "firebase/firestore";
 import AppContext from "../data/app-context";
-import { IonAlert, IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonPage } from "@ionic/react";
+import { IonAlert, IonButton, IonContent, IonInput, IonItem, IonLabel, IonList, IonPage, IonToast } from "@ionic/react";
+
 interface FormItems {
   username: string;
   email: string;
@@ -14,6 +15,7 @@ const SignUp = () => {
   const appCtx = useContext(AppContext);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [showToast, setShowToast] = useState<boolean>(false);
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -41,7 +43,7 @@ const SignUp = () => {
             username: values.username
           })
           .then(() => {
-            history.push('map');
+            setShowToast(true)
           })
           .catch(error => {
             setErrorMessage(error.message)
@@ -113,6 +115,12 @@ const SignUp = () => {
             text: 'Ok'
           }
         ]}
+      />
+      <IonToast
+        isOpen={showToast}
+        onDidDismiss={() => setShowToast(false)}
+        message="Your account is created."
+        duration={2000}
       />
     </IonPage>
   );

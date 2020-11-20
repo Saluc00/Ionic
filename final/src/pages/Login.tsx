@@ -1,6 +1,5 @@
-import { IonAlert, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import { logoFigma } from 'ionicons/icons';
-import AppContext from "../data/app-context";
+import {  IonButton,  IonContent,  IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToast, IonToolbar } from '@ionic/react';
+import AppContext, { Profile } from "../data/app-context";
 import React, { useContext, useState } from 'react'
 import firebase from '../firebase'
 import "firebase/auth";
@@ -13,13 +12,13 @@ interface UserData {
     password: string;
 }
 
+
+
 const Connexion: React.FC = () => {
     const appCtx = useContext(AppContext);
     const history = useHistory();
-    const [email, setEmail] = useState<string>('');
-    const [showAlert, setShowAlert] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>();
-    const [password, setPassword] = useState<string>('');
+    const [toastMessage, setToastMessage] = useState<string>();
+    const [showToast, setShowToast] = useState<boolean>(false);
     const [values, setValues] = useState<UserData>({
         email: "",
         password: ""
@@ -34,19 +33,36 @@ const Connexion: React.FC = () => {
     }
 
     const handleSubmit = (event: any) => {
-        console.log(values)
         event.preventDefault();
         firebase
             .auth()
             .signInWithEmailAndPassword(values.email, values.password)
             .then(res => {
                 appCtx.setUser(res);
-                console.log(res, 'res')
-                history.push('map');
+                const db = firebase.firestore();
+                
+                db.collection("Users").doc(res.user!.uid).get()
+                .then(e  => {
+                    const profile: Profile = {
+                        username: e.data()!.username,
+                        email: e.data()!.email,
+                        picture: null,
+                        conn: true
+                    }                    
+                    
+                    setToastMessage(`Hi ${profile.username} !`)
+                    appCtx.updateProfile(profile)
+                    setShowToast(true)
+                })
+                .catch(error => {
+                    setToastMessage(error.message)
+                    setShowToast(true)
+                });
+                 history.push('tabs')
             })
             .catch(error => {
-                setErrorMessage(error.message)
-                setShowAlert(true)
+                setToastMessage(error.message)
+                setShowToast(true)
             });
     }
 
@@ -109,15 +125,12 @@ const Connexion: React.FC = () => {
                     <div style={{ flexGrow: 1 }} />
                 </div>
             </IonContent>
-            <IonAlert
-                isOpen={showAlert}
-                header={errorMessage}
-                onDidDismiss={() => { setErrorMessage(""); setShowAlert(false) }}
-                buttons={[
-                    {
-                        text: 'Ok'
-                    }
-                ]}
+            <IonToast
+                isOpen={showToast}
+                color='primary'
+                onDidDismiss={() => { setToastMessage(""); setShowToast(false) }}
+                message={toastMessage}
+                duration={2000}
             />
     </IonPage>
     );

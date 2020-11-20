@@ -24,7 +24,6 @@ const AppContextProvider: React.FC = (props) => {
     
     useEffect(() => {
         if (didMountRef.current) {
-            console.log(profile)
             Storage.set({ key: 'profile', value: JSON.stringify(profile) })
         } else {
             didMountRef.current = true;

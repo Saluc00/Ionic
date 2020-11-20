@@ -3,12 +3,16 @@ import firebase from "../firebase";
 
 export interface Profile {
     username: string,
+    email: string
     picture: string | null
+    conn: boolean
 }
 
 export const defaultProfile: Profile = {
     username: "Unknown",
-    picture: null
+    email: "Unknown",
+    picture: null,
+    conn: false
 }
 
 interface AppContext {
