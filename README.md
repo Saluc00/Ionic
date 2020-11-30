@@ -33,4 +33,4 @@ Repository regroupant tous les TP des cours de developpement mobile.
 **Lien direct**: https://github.com/Saluc00/Ionic/tree/main/final
 
 *par Usereau Lucas*
-*et Foofouz Arthur*
+*et Fourfooz Arthur*
