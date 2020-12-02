@@ -21,7 +21,8 @@ const Tabs: React.FC = () => {
             const newProfile: Profile = {
                 username: e.data()!.username,
                 email: e.data()!.email,
-                picture: null,
+                lat: appCtx.profile.lat,
+                long: appCtx.profile.long,
                 conn: true
             }
             appCtx.updateProfile(newProfile)

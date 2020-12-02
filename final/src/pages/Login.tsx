@@ -46,7 +46,8 @@ const Connexion: React.FC = () => {
                     const profile: Profile = {
                         username: e.data()!.username,
                         email: e.data()!.email,
-                        picture: null,
+                        lat: 0,
+                        long: 0,
                         conn: true
                     }                    
                     
@@ -105,12 +106,6 @@ const Connexion: React.FC = () => {
                                 </IonList>
                                 <div style={{ marginTop: "1em" }}>
                                     <IonButton expand="full" onClick={handleSubmit}>Login</IonButton>
-                                </div>
-                                <div style={{ marginTop: "1em", paddingTop: "1em", borderTop: "1px solid grey" }}>
-                                    <IonButton expand="full" color="danger" onClick={handleWithGoogle}>
-                                        <IonIcon icon={logoGoogle} slot="start" />
-                                        Login with Google
-                                        </IonButton>
                                 </div>
                                 <div>
                                     <p style={{ margin: "0", marginTop: "2em" }}>

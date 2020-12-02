@@ -16,6 +16,8 @@ dependencies {
     implementation "com.google.firebase:firebase-config:+"
     implementation "com.google.firebase:firebase-perf:+"
 }
+apply from: "../../node_modules/cordova-android-firebase-gradle-release/cordova-android-firebase-gradle-release.gradle"
+apply from: "../../node_modules/cordova-android-support-gradle-release/cordova-android-support-gradle-release.gradle"
 apply from: "../../node_modules/cordova-plugin-firebase/src/android/build.gradle"
 
 if (hasProperty('postBuildExtras')) {

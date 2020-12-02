@@ -3,15 +3,17 @@ import firebase from "../firebase";
 
 export interface Profile {
     username: string,
-    email: string
-    picture: string | null
+    email: string,
+    lat: number,
+    long: number,
     conn: boolean
 }
 
 export const defaultProfile: Profile = {
     username: "Unknown",
     email: "Unknown",
-    picture: null,
+    lat: 0,
+    long: 0,
     conn: false
 }
 
