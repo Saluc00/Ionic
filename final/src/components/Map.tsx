@@ -41,7 +41,7 @@ const MapContainer = () => {
     return (
         <GoogleMapProvider>
             <MapBox
-                apiKey="AIzaSyA81xE8FtWW1Via90bxw-9rc9YcPsgmetw"
+                apiKey="AIzaSyC509sJR-rfvKAY8Q8KCn6d5Gg_7v5Vm7c"
                 opts={{
                     center: {lat: latitude, lng: longitude},
                     zoom: 14,

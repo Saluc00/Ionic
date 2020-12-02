@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToast, IonToolbar } from '@ionic/react';
+import {IonCard, IonAlert, IonButton, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToast, IonToolbar } from '@ionic/react';
 import React, { useContext, useState } from 'react'
 import AppContext, { Profile } from "../data/app-context";
 import './profile.css'
@@ -79,6 +79,23 @@ const Profiles: React.FC = () => {
                 </IonRow>
                 </IonGrid>
             </IonItem>
+
+            {/*-- Statistique Profil --*/}
+            <IonCard >
+              <IonTitle size="large">Statistique Profil</IonTitle>
+              <IonItem lines="none">
+                <IonLabel color="secondary">Nombre de photo pris:{}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel color="secondary">Nombre de lieux:{}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel color="secondary">Lieux favoris:{}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel color="secondary">Nombre d'amis:{}</IonLabel>
+              </IonItem>
+            </IonCard>
             
             <div style={{ marginTop: "1em", paddingTop: "1em", borderTop: "1px solid grey" }}>
                 <IonButton expand="block" color="danger" >Disconnect</IonButton>
