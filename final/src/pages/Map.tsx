@@ -19,7 +19,7 @@ export interface AllPhoto {
 const Maps: React.FC = () => {
     const appCtx = useContext(AppContext)
     const [allPhotos, setAllPhotos] = useState<string[]>([]);
-    const { toastMessage, toastShow, setToastMessage, setToastShow, photos, takePhoto } = usePhotoGallery();
+    const { toastMessage, toastShow, setToastMessage, setToastShow, photos, takePhoto, getPhotos } = usePhotoGallery();
     
     useIonViewDidEnter(() => {
         getData()

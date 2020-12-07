@@ -20,8 +20,6 @@ const Friends: React.FC = () => {
             <IonButton onClick={() => setShowModal(true)}><IonIcon icon={personAddSharp} /></IonButton>
             </IonToolbar>
             <IonContent fullscreen>
-                <p>• Voire « Statistique » ami</p>
-                <p>• Ajouter ami</p>
                 <p>• Accéder à la map d’un ami</p>
                 <p>• Accepter/refuser l’accès a notre map/photo a un ami</p>
                 <p>• Nombre d’amis</p>

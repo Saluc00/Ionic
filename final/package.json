@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^2.4.2",
-    "@capacitor/core": "2.4.2",
+    "@capacitor/core": "^2.4.2",
     "@googlemap-react/core": "^0.1.11",
     "@ionic-native/firebase": "^5.29.0",
     "@ionic-native/firebase-authentication": "^4.20.0",

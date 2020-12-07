@@ -8,6 +8,7 @@ import "firebase/storage";
 import AppContext , {Profile} from "../data/app-context";
 
 import { Plugins } from '@capacitor/core'  
+import { app } from "firebase-admin";
 const { Geolocation } = Plugins;
 
 export interface Photo {
@@ -37,27 +38,34 @@ export function usePhotoGallery() {
     });
     
     await Geolocation.getCurrentPosition().then(
-      e => {
+      async e => {
           setLatitude(e.coords.latitude)
           setLongitude(e.coords.longitude)
           console.log(e.coords.latitude, typeof(e.coords.longitude), latitude, typeof(longitude))
-      }
-    )
-      console.log(3, latitude, longitude);
-      
-    const base64 = await base64FromPath(cameraPhoto.webPath!)
+          const base64 = await base64FromPath(cameraPhoto.webPath!)    
+          const db = firebase.storage().ref(appCtx.user?.uid  + '/' + base64.slice(100, 110).replace(/\W/, '')  )
+          var newMetadata = {
+            customMetadata:{ 
+              latitude: e.coords.latitude.toString(),
+              longitude:  e.coords.longitude.toString()
+            }
+          }
+          
+                      
+          db.putString(base64, "data_url")
+          .then(() => {
+            db.updateMetadata(newMetadata);
+            setToastMessage('Picture saved!')
+            setToastShow(true)
+          })
+          .catch(()=> {
+            setToastMessage('Can\'t send this picture')
+            setToastShow(true)
+          })
+      })
+
+
     
-    const db = firebase.storage().ref(appCtx.user?.uid + '/' + base64);
-                
-    db.putString(base64, "data_url")
-    .then(() => {
-      setToastMessage('Picture saved!')
-      setToastShow(true)
-    })
-    .catch(()=> {
-      setToastMessage('Can\'t send this picture')
-      setToastShow(true)
-    })
 
     const fileName = new Date().getTime() + '.jpeg';
     const newPhotos = [{
@@ -68,6 +76,12 @@ export function usePhotoGallery() {
     setPhotos(newPhotos)    
   };
 
+  const getPhotos = async () => {
+    const db = await firebase.storage().ref(appCtx.user?.uid).listAll()
+    db.items.forEach(async e => appCtx.addPhoto({url: await e.getDownloadURL(), pos: await e.getMetadata()}))
+    return appCtx.photos
+  }
+
   return {
     photos,
     takePhoto,
@@ -76,6 +90,7 @@ export function usePhotoGallery() {
     setToastMessage,
     setToastShow,
     latitude,
-    longitude
+    longitude,
+    getPhotos
   };
 }

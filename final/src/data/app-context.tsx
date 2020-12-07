@@ -9,6 +9,13 @@ export interface Profile {
     conn: boolean
 }
 
+export interface Photo {
+    url: string,
+    pos: string
+}
+
+export const photos : any = [] 
+
 export const defaultProfile: Profile = {
     username: "Unknown",
     email: "Unknown",
@@ -21,7 +28,9 @@ interface AppContext {
     initContext: () => void,
     profile: Profile,
     updateProfile: (updatedProfile: Profile) => void,
+    addPhoto: (p: Photo) => void
 
+    photos: Photo[],
     user: firebase.User | null,
     authenticated: boolean;
     setUser: any;
@@ -32,7 +41,9 @@ const AppContext = React.createContext<AppContext>({
     initContext: () => { },
     profile: defaultProfile,
     updateProfile: () => { },
+    addPhoto: () => { },
 
+    photos: photos,
     user: null,
     authenticated: false,
     setUser: () => {},

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AppContext, { Profile, defaultProfile } from './app-context';
+import AppContext, { Profile, defaultProfile, Photo, photos } from './app-context';
 import firebase from "../firebase";
 
 import { Plugins } from '@capacitor/core'
@@ -35,6 +35,10 @@ const AppContextProvider: React.FC = (props) => {
         setProfile(updateProfile)
     }
 
+    const  addPhoto = (p: Photo) => {
+        photos.push(p)
+    }
+
     const initContext = async () => {
         const profileData = await Storage.get({ key: 'profile' })
         const storedProfile = profileData.value ? JSON.parse(profileData.value) : defaultProfile;
@@ -47,6 +51,8 @@ const AppContextProvider: React.FC = (props) => {
         profile,
         updateProfile,
 
+        photos,
+        addPhoto,
         user,
         authenticated: user !== null,
         setUser,

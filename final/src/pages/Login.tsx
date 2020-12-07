@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react'
 import firebase from '../firebase'
 import "firebase/auth";
 import "firebase/firestore";
-import { logoGoogle } from "ionicons/icons";
 import { useHistory } from 'react-router';
 
 interface UserData {
@@ -33,14 +32,14 @@ const Connexion: React.FC = () => {
     }
 
     const handleSubmit = (event: any) => {
-        event.preventDefault();
+        event.preventDefault();        
         firebase
             .auth()
             .signInWithEmailAndPassword(values.email, values.password)
             .then(res => {
                 appCtx.setUser(res);
-                const db = firebase.firestore();
                 
+                const db = firebase.firestore();                
                 db.collection("Users").doc(res.user!.uid).get()
                 .then(e  => {
                     const profile: Profile = {
@@ -49,17 +48,27 @@ const Connexion: React.FC = () => {
                         lat: 0,
                         long: 0,
                         conn: true
-                    }                    
+                    }          
+                    db.collection('Users').doc(res.user!.uid).get().then( e => {
+                        const newProfile: Profile = {
+                            username: e.data()!.username,
+                            email: e.data()!.email,
+                            lat: appCtx.profile.lat,
+                            long: appCtx.profile.long,
+                            conn: true
+                        }
+                        appCtx.updateProfile(newProfile)
+                    })          
                     
                     setToastMessage(`Hi ${profile.username} !`)
                     appCtx.updateProfile(profile)
                     setShowToast(true)
+                    history.push('tabs')
                 })
                 .catch(error => {
                     setToastMessage(error.message)
                     setShowToast(true)
                 });
-                 history.push('tabs')
             })
             .catch(error => {
                 setToastMessage(error.message)

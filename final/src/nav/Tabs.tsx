@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Redirect, Route} from 'react-router-dom';
-import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
+import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, useIonViewDidEnter } from '@ionic/react'
 import { person, map, chatbubbles, settingsSharp,scanCircleOutline } from 'ionicons/icons';
 import Friends from '../pages/Friends';
 import Maps from '../pages/Map';
@@ -12,25 +12,6 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const Tabs: React.FC = () => {
-    const appCtx = useContext(AppContext) 
-    const userCredential = firebase.auth().currentUser;
-    let i = 0
-
-    if (userCredential && appCtx.profile.username != 'Unknow' && i ==0) {
-        const db = firebase.firestore();
-        db.collection('Users').doc(appCtx.user?.uid).get().then( e => {
-            const newProfile: Profile = {
-                username: e.data()!.username,
-                email: e.data()!.email,
-                lat: appCtx.profile.lat,
-                long: appCtx.profile.long,
-                conn: true
-            }
-            appCtx.updateProfile(newProfile)
-            i+=1
-        })
-    }
-
     return (
     <IonTabs>
         <IonRouterOutlet>
@@ -49,10 +30,6 @@ const Tabs: React.FC = () => {
                 <IonIcon icon={map} />
                 <IonLabel>Map</IonLabel>
             </IonTabButton>
-            <IonTabButton>
-                <IonIcon icon={scanCircleOutline} />
-                <IonLabel>Photo</IonLabel>
-          </IonTabButton>
             <IonTabButton tab="profile" href="/tabs/profile">
                 <IonIcon icon={person} />
                 <IonLabel>Profile</IonLabel>
